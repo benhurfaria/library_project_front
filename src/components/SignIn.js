@@ -26,7 +26,7 @@ export default function SignIn() {
       })
       .catch((err) => {
         if (err.response.status === 401) {
-          alert('Conta nao cadastrada');
+          alert('Conta nao cadastrada ou senha incorreta');
         }
       });
   }
