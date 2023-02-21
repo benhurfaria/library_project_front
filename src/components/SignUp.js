@@ -7,20 +7,21 @@ import Titulo from './Titulo';
 export default function Signup() {
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
-  const [password, setPassword] = useState('');
+  const [senha, setSenha] = useState('');
   const [confirm, setConfirm] = useState('');
   const [email, setEmail] = useState('');
   const history = useNavigate();
   function cadastro() {
     const body = {
-      name: nome,
+      nome,
+      cpf,
       email,
-      password,
+      senha,
     };
-    if (password.length === 0 || email.length === 0) {
+    if (senha.length === 0 || email.length === 0) {
       alert('vc precisa digitar senha ou email');
-    } else if (password === confirm) {
-      const promise = axios.post('http://localhost:4000/signup', body);
+    } else if (senha === confirm) {
+      const promise = axios.post('https://api-library-ii.onrender.com/signup', body);
       promise
         .then((resp) => {
           alert('cadastro feito com sucesso');
@@ -28,7 +29,7 @@ export default function Signup() {
         })
         .catch((err) => {
           if (err.response.status === 400) {
-            alert('email ja cadastrado');
+            alert('email inconsistente');
           }
           if (err.response.status === 500) {
             alert('servidor fora de área');
@@ -63,8 +64,8 @@ export default function Signup() {
       <Input
         placeholder="Senha"
         type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
       />
       <Input
         placeholder="Confirme a senha"

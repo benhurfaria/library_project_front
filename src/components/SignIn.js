@@ -9,20 +9,20 @@ import { storeUser, getStoredUser } from './Persistencia';
 export default function SignIn() {
   const { setLoggedUser } = useContext(ContextLogin);
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [senha, setSenha] = useState('');
   const history = useNavigate();
   function login() {
     const body = {
       email,
-      password,
+      senha,
     };
-    const promise = axios.post('http://localhost:4000/signin', body);
+    const promise = axios.post('https://api-library-ii.onrender.com/signin', body);
     promise
       .then((resp) => {
         setLoggedUser(resp.data);
         storeUser(resp.data);
         setLoggedUser(resp.data);
-        history('/timeline');
+        history('/Home');
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -32,7 +32,7 @@ export default function SignIn() {
   }
   useEffect(() => {
     const user = getStoredUser();
-    user ? history('/timeline') : history('/');
+    user ? history('/Home') : history('/');
   }, [history]);
   return (
     <Principal>
@@ -45,8 +45,8 @@ export default function SignIn() {
       />
       <Input
         placeholder="Senha"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={senha}
+        onChange={(e) => setSenha(e.target.value)}
         type="password"
       />
       <Botao onClick={login}>Entrar</Botao>
